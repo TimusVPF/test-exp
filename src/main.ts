@@ -5,7 +5,7 @@ import * as dotenv from 'dotenv';
 import { HttpExceptionFilter } from './domain/global/filter/http-exception-filter';
 
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { INestApplication, ValidationPipe } from '@nestjs/common';
+import { INestApplication, Logger, ValidationPipe } from '@nestjs/common';
 
 function initSwagger(app: INestApplication): void {
     const swaggerConfig = new DocumentBuilder()
@@ -20,10 +20,15 @@ function initSwagger(app: INestApplication): void {
 dotenv.config();
 async function bootstrap(): Promise<void> {
     const app = await NestFactory.create(AppModule);
+    const logger = new Logger();
     app.setGlobalPrefix(process.env.APP_API_PREFIX);
     app.useGlobalFilters(new HttpExceptionFilter());
     app.useGlobalPipes(new ValidationPipe());
     initSwagger(app);
+    logger.log(
+        `Listening on port ${process.env.APP_PORT}.`,
+        process.env.APP_NAME,
+    );
     await app.listen(process.env.APP_PORT);
 }
 bootstrap();
