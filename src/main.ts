@@ -20,10 +20,10 @@ function initSwagger(app: INestApplication): void {
 dotenv.config();
 async function bootstrap(): Promise<void> {
     const app = await NestFactory.create(AppModule);
-    initSwagger(app);
     app.setGlobalPrefix(process.env.APP_API_PREFIX);
     app.useGlobalFilters(new HttpExceptionFilter());
     app.useGlobalPipes(new ValidationPipe());
+    initSwagger(app);
     await app.listen(process.env.APP_PORT);
 }
 bootstrap();

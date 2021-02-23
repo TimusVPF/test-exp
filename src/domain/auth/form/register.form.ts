@@ -13,7 +13,7 @@ import {
 export class RegisterForm {
     @ApiProperty({
         description:
-            'The title of the registrant. Must either be "Mr." or "Mrs."',
+            'The title of the registrant. Must either be "Mr." or "Ms." or "Mrs."',
         example: 'Mr.',
         name: 'title',
         required: true,
